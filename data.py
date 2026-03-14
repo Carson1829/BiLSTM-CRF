@@ -5,7 +5,7 @@ from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import Dataset
 
 def load_data(filepath):
-    """Load JSON-lines data file; return list of (tokens, tag_ids) tuples."""
+    """Load JSON-lines data file; return list of (tokens, tag _ids) tuples."""
     data = []
     with open(filepath, encoding='utf-8') as f:
         for line in f:

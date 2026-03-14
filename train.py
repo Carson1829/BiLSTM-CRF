@@ -12,6 +12,7 @@ def train_one_epoch(model, loader, optimizer, device, run):
         word_ids = word_ids.to(device)
         char_ids = char_ids.to(device)
         tag_ids  = tag_ids.to(device)
+        lengths = lengths.to(device)
 
         model.zero_grad()
         if run == "SM":
@@ -31,7 +32,12 @@ def train(model, train_loader, val_loader, epochs, optimizer, device, idx_to_tag
     print(f"\nTraining for {epochs} epochs...")
 
     for epoch in range(epochs):
+        import time
+        start = time.time()
         loss = train_one_epoch(model, train_loader, optimizer, device, run)
+        elapsed = time.time() - start
+        print(f"Epoch time: {elapsed:.2f}s")
+
         preds, golds = evaluate_model(model, val_loader, device)
         _, _, f1 = get_metrics(preds, golds, idx_to_tag)
         print(f"Epoch {epoch+1}/{epochs} — loss: {loss:.4f}, F1: {f1:.4f}")

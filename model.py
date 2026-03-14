@@ -145,7 +145,7 @@ class BiLSTM_CRF(nn.Module):
         word_emb = self.dropout(word_emb)
 
         # Character CNN features
-        if char_ids is not None:
+        if self.char_cnn is not None:
             char_feats = self.char_cnn(char_ids)    
             embeddings = torch.cat([word_emb, char_feats], dim=2)
         else:
